@@ -2,9 +2,17 @@ import React from 'react';
 import './App.css';
 
 function App() {
+    const [nameValue, setNameValue] = React.useState('');
+
     return (
         <div>
-            Maak hier jouw formulier!
+            <form>
+                <input
+                    type="text"
+                    value={nameValue}
+                    onChange={(e) => setNameValue(e.target.value)}
+                />
+            </form>
         </div>
     );
 }
