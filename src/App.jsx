@@ -2,19 +2,27 @@ import React from 'react';
 import './App.css';
 
 function App() {
-    const [nameValue, setNameValue] = React.useState('');
-    const [ageValue, setAgeValue] = React.useState(0);
-    const [reviewValue, setReviewValue] = React.useState('');
-    const [newsletterCheckbox, toggleNewsletterCheckbox] = React.useState(false);
+
+    const [formState, setFormState] = React.useState({
+        name: '',
+        age: 0,
+        review: '',
+        newsletter: false
+    });
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(`
-            Name: ${nameValue}
-            Age: ${ageValue}
-            Review: ${reviewValue}
-            Newsletter: ${newsletterCheckbox}
-            `)
+        console.log(formState);
+    }
+
+    function handleChange(e) {
+        const changedFieldName = e.target.name;
+        const newValue = e.target.value === 'checkbox' ? event.target.checked : event.target.value;
+
+        setFormState({
+            ...formState,
+            [changedFieldName]: newValue,
+        })
     }
 
     return (
@@ -28,8 +36,8 @@ function App() {
                             type="text"
                             name="name"
                             id="user-name-field"
-                            value={nameValue}
-                            onChange={(e) => setNameValue(e.target.value)}
+                            value={formState.name}
+                            onChange={handleChange}
                         />
                     </label>
                     <label htmlFor="user-age-field">
@@ -38,8 +46,8 @@ function App() {
                             type="number"
                             name="age"
                             id="user-age-field"
-                            value={ageValue}
-                            onChange={(e) => setAgeValue(e.target.value)}
+                            value={formState.age}
+                            onChange={handleChange}
                         />
                     </label>
                 </fieldset>
@@ -52,9 +60,9 @@ function App() {
                             name="review"
                             rows="5"
                             cols="30"
-                            value={reviewValue}
+                            value={formState.review}
                             placeholder="Wat vond je van het recept?"
-                            onChange={(e)=> setReviewValue(e.target.value)}
+                            onChange={handleChange}
                         >
                         </textarea>
                     </label>
@@ -63,8 +71,8 @@ function App() {
                             type="checkbox"
                             name="newsletter"
                             id="newsletter-checkbox"
-                            value={newsletterCheckbox}
-                            onChange={(e) => toggleNewsletterCheckbox(e.target.checked)}
+                            value={formState.newsletter}
+                            onChange={handleChange}
                         />
                         Ik schrijf me in voor de nieuwsbrief
                     </label>
